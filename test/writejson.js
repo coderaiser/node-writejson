@@ -6,21 +6,21 @@ let fs          = require('fs');
 let test        = require('tape');
 let writejson   = require('..');
 
-let tmp = os.tmpdir();
-let name = path.join(tmp, String(Math.random()));
-let json = {
+const tmp = os.tmpdir();
+const NAME = path.join(tmp, String(Math.random()));
+const json = {
     hello: 'world'
 };
 
 test('writejson: should write json data to file', t => {
-    writejson(name, json, error => {
+    writejson(NAME, json, error => {
         t.notOk(error, 'no write error');
          
-        fs.readFile(name, 'utf8', (error, data) => {
+        fs.readFile(NAME, 'utf8', (error, data) => {
             t.notOk(error, 'no read error');
             t.deepEqual(json, JSON.parse(data), 'data should be equal');
             
-            fs.unlink(name, error => {
+            fs.unlink(NAME, error => {
                 t.notOk(error, 'no remove error');
                 t.end();
             });
@@ -29,7 +29,7 @@ test('writejson: should write json data to file', t => {
 });
 
 test('writejson: no args', t => {
-    t.throws(writejson, /name should be string!/, 'name check');
+    t.throws(writejson, /name should be string!/, 'NAME check');
     t.end();
 });
 
@@ -48,16 +48,16 @@ test('writejson: no callback', t => {
 });
 
 test('writejson.sync: should write json data to file synchonously', t => {
-    writejson.sync(name, json);
-    let data = fs.readFileSync(name, 'utf8');
+    writejson.sync(NAME, json);
+    let data = fs.readFileSync(NAME, 'utf8');
     t.ok(data, 'data should be read');
     t.deepEqual(json, JSON.parse(data), 'data should be equal');
-    fs.unlinkSync(name);
+    fs.unlinkSync(NAME);
     t.end();
 });
 
 test('writejson.sync: no args', t => {
-    t.throws(writejson.sync, /name should be string!/, 'name check');
+    t.throws(writejson.sync, /name should be string!/, 'NAME check');
     t.end();
 });
 
@@ -69,7 +69,7 @@ test('writejson.sync: no json', t => {
 });
 
 test('writejson.sync.try: no args', t => {
-    t.throws(writejson.sync.try, /name should be string!/, 'name check');
+    t.throws(writejson.sync.try, /name should be string!/, 'NAME check');
     t.end();
 });
 

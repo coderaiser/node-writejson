@@ -4,6 +4,7 @@ node_js:
     - 4
 
 script:
+  - npm run codestyle
   - npm test
 
 notifications:

@@ -31,11 +31,11 @@ writejson.sync.try('data.json', {hello: 'world'});
 MIT
 
 [NPMIMGURL]:                https://img.shields.io/npm/v/writejson.svg?style=flat
-[BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/writejson/master.svg?style=flat
-[DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/writejson.svg?style=flat
+[BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/node-writejson/master.svg?style=flat
+[DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/node-writejson.svg?style=flat
 [LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
 [NPMURL]:                   https://npmjs.org/package/writejson "npm"
-[BuildStatusURL]:           https://travis-ci.org/coderaiser/writejson  "Build Status"
-[DependencyStatusURL]:      https://gemnasium.com/coderaiser/writejson "Dependency Status"
+[BuildStatusURL]:           https://travis-ci.org/coderaiser/node-writejson  "Build Status"
+[DependencyStatusURL]:      https://gemnasium.com/coderaiser/node-writejson "Dependency Status"
 [LicenseURL]:               https://tldrlegal.com/license/mit-license "MIT License"
 

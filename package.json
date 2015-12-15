@@ -9,6 +9,9 @@
   },
   "main": "lib/writejson.js",
   "scripts": {
+    "jscs": "jscs --esnext lib test",
+    "jshint": "jshint lib test",
+    "codestyle": "npm-run-all jshint jscs",
     "test": "tape test/*.js"
   },
   "repository": {
@@ -24,6 +27,9 @@
     "try-catch": "~1.0.0"
   },
   "devDependencies": {
+    "jscs": "^2.7.0",
+    "jshint": "^2.8.0",
+    "npm-run-all": "^1.4.0",
     "tape": "^4.2.2"
   }
 }
