@@ -1,0 +1,29 @@
+{
+  "name": "writejson",
+  "version": "1.0.0",
+  "description": "Write stringified object to file",
+  "author": "coderaiser <mnemonic.enemy@gmail.com> (http://coderaiser.github.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coderaiser/node-writejson/issues"
+  },
+  "main": "lib/writejson.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/coderaiser/node-writejson.git"
+  },
+  "keywords": [
+    "read",
+    "parse",
+    "json"
+  ],
+  "dependencies": {
+    "try-catch": "~1.0.0"
+  },
+  "devDependencies": {
+    "tape": "^4.2.2"
+  }
+}
