@@ -9,7 +9,8 @@ let writejson   = require('..');
 const tmp = os.tmpdir();
 const NAME = path.join(tmp, String(Math.random()));
 const json = {
-    hello: 'world'
+    hello: 'world',
+    bye: 'sword'
 };
 
 test('writejson: should write json data to file', t => {
@@ -28,6 +29,57 @@ test('writejson: should write json data to file', t => {
     });
 });
 
+test('writejson: should write json data to file with options', t => {
+    let result = {
+        hello: 'world'
+    };
+    
+    let options = {
+        replacer: ['hello'],
+        space: 2,
+        eof: false
+    };
+    
+    let resultStr = JSON.stringify(json, options.replacer, options.space);
+    
+    writejson(NAME, json, options, error => {
+        t.notOk(error, 'no write error');
+         
+        fs.readFile(NAME, 'utf8', (error, data) => {
+            t.notOk(error, 'no read error');
+            
+            t.equal(resultStr, data, 'data should be equal');
+            t.deepEqual(JSON.parse(data), result, 'objects should be equal');
+            
+            fs.unlink(NAME, error => {
+                t.notOk(error, 'no remove error');
+                t.end();
+            });
+        });
+    });
+});
+
+test('writejson: should write json data to file with default options', t => {
+    let resultStr = JSON.stringify(json, null, 4);
+    resultStr += '\n';
+    
+    writejson(NAME, json, error => {
+        t.notOk(error, 'no write error');
+         
+        fs.readFile(NAME, 'utf8', (error, data) => {
+            t.notOk(error, 'no read error');
+            
+            t.equal(resultStr, data, 'data should be equal');
+            t.deepEqual(JSON.parse(data), json, 'objects should be equal');
+            
+            fs.unlink(NAME, error => {
+                t.notOk(error, 'no remove error');
+                t.end();
+            });
+        });
+    });
+});
+
 test('writejson: no args', t => {
     t.throws(writejson, /name should be string!/, 'NAME check');
     t.end();
@@ -37,6 +89,13 @@ test('writejson: no json', t => {
     let fn = () => writejson('hello');
 
     t.throws(fn, /json should be object!/, 'json check');
+    t.end();
+});
+
+test('writejson: options not object', t => {
+    let fn = () => writejson('hello', {}, 'options', () => {});
+
+    t.throws(fn, /options should be object!/, 'options check');
     t.end();
 });
 

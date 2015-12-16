@@ -8,6 +8,12 @@ Write stringified object to file.
 npm i writejson --save
 ```
 ## How to use?
+To handle formating optional argument `options` could be used accroding to [JSON.stringify][StringifyURL].
+
+### API
+
+#### writejson(name, object, [ options, ] callback)
+Asynchonouse write stringified object.
 
 ```js
 var writejson = require('writejson');
@@ -17,12 +23,33 @@ writejson('data.json', {hello: 'world'}, function(error) {
         console.error(error.message);
 });
 
+var options = {
+    replacer: ['hello'],// properties to put in json
+    space: 4            // default space count
+    eof: true           // default new line at end of file
+};
+
+writejson('data.json', {hello: 'world'}, options, function(error) {
+    if (error)
+        console.error(error.message);
+});
+
+```
+#### writejson.sync(name, object [, options])
+Synchonouse write stringified object.
+
+```js
 try {
     writejson.sync('data.json', {hello: 'world'});
 } catch(error) {
     console.log(error.message);
 }
+```
 
+#### writejson.sync.try(name, object [, options])
+Synchonouse try to write stringified object.
+
+```js
 writejson.sync.try('data.json', {hello: 'world'});
 ```
 
@@ -30,6 +57,7 @@ writejson.sync.try('data.json', {hello: 'world'});
 
 MIT
 
+[StringifyURL]:           https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 [NPMIMGURL]:                https://img.shields.io/npm/v/writejson.svg?style=flat
 [BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/node-writejson/master.svg?style=flat
 [DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/node-writejson.svg?style=flat
