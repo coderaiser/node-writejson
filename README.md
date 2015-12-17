@@ -12,7 +12,7 @@ To handle formating optional argument `options` could be used accroding to [JSON
 
 ### API
 
-#### writejson(name, object, [ options, ] callback)
+#### writejson(name, object[, options], callback)
 Asynchonouse write stringified object.
 
 ```js
@@ -35,7 +35,7 @@ writejson('data.json', {hello: 'world'}, options, function(error) {
 });
 
 ```
-#### writejson.sync(name, object [, options])
+#### writejson.sync(name, object[, options])
 Synchonouse write stringified object.
 
 ```js
@@ -46,7 +46,7 @@ try {
 }
 ```
 
-#### writejson.sync.try(name, object [, options])
+#### writejson.sync.try(name, object[, options])
 Synchonouse try to write stringified object.
 
 ```js
