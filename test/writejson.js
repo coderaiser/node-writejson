@@ -88,7 +88,8 @@ test('writejson: write error', t => {
 });
 
 test('writejson.sync.try: write error', t => {
-    let error = writejson.sync.try('/hello.json', json)
+    let error = writejson.sync.try('/hello.json', json);
+    
     t.ok(error, 'should return error: ' + error.message);
     t.end();
 });
