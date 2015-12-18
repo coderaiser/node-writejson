@@ -12,7 +12,8 @@
     "jscs": "jscs --esnext lib test",
     "jshint": "jshint lib test",
     "codestyle": "npm-run-all jshint jscs",
-    "test": "tape test/*.js"
+    "test": "tape test/*.js",
+    "coverage": "nyc npm test"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "jscs": "^2.7.0",
     "jshint": "^2.8.0",
     "npm-run-all": "^1.4.0",
+    "nyc": "~5.0.1",
     "tape": "^4.2.2"
   }
 }
