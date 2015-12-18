@@ -80,6 +80,19 @@ test('writejson: should write json data to file with default options', t => {
     });
 });
 
+test('writejson: write error', t => {
+    writejson('/hello.json', json, error => {
+        t.ok(error, 'should return error: ' + error.message);
+        t.end();
+    });
+});
+
+test('writejson.sync.try: write error', t => {
+    let error = writejson.sync.try('/hello.json', json)
+    t.ok(error, 'should return error: ' + error.message);
+    t.end();
+});
+
 test('writejson: no args', t => {
     t.throws(writejson, /name should be string!/, 'NAME check');
     t.end();
