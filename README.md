@@ -57,12 +57,12 @@ writejson.sync.try('data.json', {hello: 'world'});
 
 MIT
 
-[StringifyURL]:           https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+[StringifyURL]:             https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 [NPMIMGURL]:                https://img.shields.io/npm/v/writejson.svg?style=flat
 [BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/node-writejson/master.svg?style=flat
 [DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/node-writejson.svg?style=flat
 [LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
-[CoverageIMGURL]:              https://coveralls.io/repos/coderaiser/node-writejson/badge.svg?branch=master&service=github
+[CoverageIMGURL]:           https://coveralls.io/repos/coderaiser/node-writejson/badge.svg?branch=master&service=github
 [NPMURL]:                   https://npmjs.org/package/writejson "npm"
 [BuildStatusURL]:           https://travis-ci.org/coderaiser/node-writejson  "Build Status"
 [DependencyStatusURL]:      https://gemnasium.com/coderaiser/node-writejson "Dependency Status"
