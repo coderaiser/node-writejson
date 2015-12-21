@@ -1,4 +1,4 @@
-# writejson [![License][LicenseIMGURL]][LicenseURL] [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+# writejson [![License][LicenseIMGURL]][LicenseURL] [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
 
 Write stringified object to file.
 
@@ -62,8 +62,9 @@ MIT
 [BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/node-writejson/master.svg?style=flat
 [DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/node-writejson.svg?style=flat
 [LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
+[CoverageIMGURL]:              https://coveralls.io/repos/coderaiser/node-writejson/badge.svg?branch=master&service=github
 [NPMURL]:                   https://npmjs.org/package/writejson "npm"
 [BuildStatusURL]:           https://travis-ci.org/coderaiser/node-writejson  "Build Status"
 [DependencyStatusURL]:      https://gemnasium.com/coderaiser/node-writejson "Dependency Status"
 [LicenseURL]:               https://tldrlegal.com/license/mit-license "MIT License"
-
+[CoverageURL]:              https://coveralls.io/github/coderaiser/node-writejson?branch=master
