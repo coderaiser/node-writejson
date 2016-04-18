@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.6",
-    "jscs": "^2.7.0",
+    "jscs": "~3.0.3",
     "jshint": "^2.8.0",
     "npm-run-all": "^1.4.0",
     "nyc": "^6.1.1",
