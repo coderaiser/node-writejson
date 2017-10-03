@@ -29,7 +29,7 @@
     "try-catch": "~1.0.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.6",
+    "coveralls": "^3.0.0",
     "jscs": "~3.0.3",
     "jshint": "^2.8.0",
     "nyc": "^11.0.2",
