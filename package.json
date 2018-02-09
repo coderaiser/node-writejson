@@ -1,6 +1,6 @@
 {
   "name": "writejson",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Write stringified object to file",
   "author": "coderaiser <mnemonic.enemy@gmail.com> (http://coderaiser.github.io/)",
   "license": "MIT",
