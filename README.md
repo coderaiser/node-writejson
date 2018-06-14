@@ -24,9 +24,12 @@ writejson('data.json', {hello: 'world'}, (error) => {
 });
 
 const options = {
-    replacer: ['hello'],// properties to put in json
-    space: 4            // default space count
-    eof: true           // default new line at end of file
+    replacer: ['hello'],    // properties to put in json
+    space: 4,               // default space count
+    eof: true,              // default new line at end of file
+    encoding: 'utf8',       // default
+    mode: '0o666',          // default
+    flag: 'w',              // default
 };
 
 writejson('data.json', {hello: 'world'}, options, (error) => {

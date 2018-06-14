@@ -4,7 +4,11 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 const test = require('tape');
+const {promisify} = require('es6-promisify');
+const tryToCatch = require('try-to-catch');
+
 const writejson = require('..');
+const _writejson = promisify(writejson);
 
 const tmp = os.tmpdir();
 const NAME = path.join(tmp, String(Math.random()));
@@ -21,7 +25,7 @@ test('writejson: should write json data to file', (t) => {
             t.notOk(error, 'no read error');
             t.deepEqual(json, JSON.parse(data), 'data should be equal');
             
-            fs.unlink(NAME, error => {
+            fs.unlink(NAME, (error) => {
                 t.notOk(error, 'no remove error');
                 t.end();
             });
@@ -51,7 +55,7 @@ test('writejson: should write json data to file with options', (t) => {
             t.equal(resultStr, data, 'data should be equal');
             t.deepEqual(JSON.parse(data), result, 'objects should be equal');
             
-            fs.unlink(NAME, error => {
+            fs.unlink(NAME, (error) => {
                 t.notOk(error, 'no remove error');
                 t.end();
             });
@@ -60,7 +64,7 @@ test('writejson: should write json data to file with options', (t) => {
 });
 
 test('writejson: should write json data to file with default options', (t) => {
-    const resultStr = JSON.stringify(json, null, 4) + '\n'
+    const resultStr = JSON.stringify(json, null, 4) + '\n';
     
     writejson(NAME, json, error => {
         t.notOk(error, 'no write error');
@@ -71,7 +75,7 @@ test('writejson: should write json data to file with default options', (t) => {
             t.equal(resultStr, data, 'data should be equal');
             t.deepEqual(JSON.parse(data), json, 'objects should be equal');
             
-            fs.unlink(NAME, error => {
+            fs.unlink(NAME, (error) => {
                 t.notOk(error, 'no remove error');
                 t.end();
             });
@@ -80,10 +84,30 @@ test('writejson: should write json data to file with default options', (t) => {
 });
 
 test('writejson: write error', (t) => {
-    writejson('/hello.json', json, error => {
+    writejson('/hello.json', json, (error) => {
         t.ok(error, 'should return error: ' + error.message);
         t.end();
     });
+});
+
+test('writejson: write options', async (t) => {
+    const json = {
+        hello: 'world',
+    };
+    
+    const options = {
+        mode: 0o600
+    };
+    
+    await tryToCatch(_writejson, NAME, json, options);
+    
+    const {mode} = fs.statSync(NAME);
+    const expected = Number(mode).toString(8).slice(3);
+    
+    fs.unlinkSync(NAME);
+    
+    t.equal(expected, '600', 'should equal');
+    t.end();
 });
 
 test('writejson.sync.try: write error', (t) => {
@@ -100,14 +124,14 @@ test('writejson: no args', (t) => {
 
 test('writejson: no json', (t) => {
     const fn = () => writejson('hello');
-
+    
     t.throws(fn, /json should be object!/, 'json check');
     t.end();
 });
 
 test('writejson: options not object', (t) => {
     const fn = () => writejson('hello', {}, 'options', () => {});
-
+    
     t.throws(fn, /options should be object!/, 'options check');
     t.end();
 });
