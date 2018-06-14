@@ -1,10 +1,10 @@
 'use strict';
 
-let os          = require('os');
-let path        = require('path');
-let fs          = require('fs');
-let test        = require('tape');
-let writejson   = require('..');
+const os = require('os');
+const path = require('path');
+const fs = require('fs');
+const test = require('tape');
+const writejson = require('..');
 
 const tmp = os.tmpdir();
 const NAME = path.join(tmp, String(Math.random()));
@@ -13,7 +13,7 @@ const json = {
     bye: 'sword'
 };
 
-test('writejson: should write json data to file', t => {
+test('writejson: should write json data to file', (t) => {
     writejson(NAME, json, error => {
         t.notOk(error, 'no write error');
          
@@ -29,18 +29,18 @@ test('writejson: should write json data to file', t => {
     });
 });
 
-test('writejson: should write json data to file with options', t => {
-    let result = {
+test('writejson: should write json data to file with options', (t) => {
+    const result = {
         hello: 'world'
     };
     
-    let options = {
+    const options = {
         replacer: ['hello'],
         space: 2,
         eof: false
     };
     
-    let resultStr = JSON.stringify(json, options.replacer, options.space);
+    const resultStr = JSON.stringify(json, options.replacer, options.space);
     
     writejson(NAME, json, options, error => {
         t.notOk(error, 'no write error');
@@ -59,9 +59,8 @@ test('writejson: should write json data to file with options', t => {
     });
 });
 
-test('writejson: should write json data to file with default options', t => {
-    let resultStr = JSON.stringify(json, null, 4);
-    resultStr += '\n';
+test('writejson: should write json data to file with default options', (t) => {
+    const resultStr = JSON.stringify(json, null, 4) + '\n'
     
     writejson(NAME, json, error => {
         t.notOk(error, 'no write error');
@@ -80,74 +79,74 @@ test('writejson: should write json data to file with default options', t => {
     });
 });
 
-test('writejson: write error', t => {
+test('writejson: write error', (t) => {
     writejson('/hello.json', json, error => {
         t.ok(error, 'should return error: ' + error.message);
         t.end();
     });
 });
 
-test('writejson.sync.try: write error', t => {
-    let error = writejson.sync.try('/hello.json', json);
+test('writejson.sync.try: write error', (t) => {
+    const error = writejson.sync.try('/hello.json', json);
     
     t.ok(error, 'should return error: ' + error.message);
     t.end();
 });
 
-test('writejson: no args', t => {
+test('writejson: no args', (t) => {
     t.throws(writejson, /name should be string!/, 'NAME check');
     t.end();
 });
 
-test('writejson: no json', t => {
-    let fn = () => writejson('hello');
+test('writejson: no json', (t) => {
+    const fn = () => writejson('hello');
 
     t.throws(fn, /json should be object!/, 'json check');
     t.end();
 });
 
-test('writejson: options not object', t => {
-    let fn = () => writejson('hello', {}, 'options', () => {});
+test('writejson: options not object', (t) => {
+    const fn = () => writejson('hello', {}, 'options', () => {});
 
     t.throws(fn, /options should be object!/, 'options check');
     t.end();
 });
 
-test('writejson: no callback', t => {
-    let fn = () => writejson('hello', [1,2,3]);
+test('writejson: no callback', (t) => {
+    const fn = () => writejson('hello', [1,2,3]);
     
     t.throws(fn, /callback should be function!/, 'callback check');
     t.end();
 });
 
-test('writejson.sync: should write json data to file synchonously', t => {
+test('writejson.sync: should write json data to file synchonously', (t) => {
     writejson.sync(NAME, json);
-    let data = fs.readFileSync(NAME, 'utf8');
+    const data = fs.readFileSync(NAME, 'utf8');
     t.ok(data, 'data should be read');
     t.deepEqual(json, JSON.parse(data), 'data should be equal');
     fs.unlinkSync(NAME);
     t.end();
 });
 
-test('writejson.sync: no args', t => {
+test('writejson.sync: no args', (t) => {
     t.throws(writejson.sync, /name should be string!/, 'NAME check');
     t.end();
 });
 
-test('writejson.sync: no json', t => {
-    let fn = () => writejson.sync('hello');
+test('writejson.sync: no json', (t) => {
+    const fn = () => writejson.sync('hello');
     
     t.throws(fn, /json should be object!/, 'json check');
     t.end();
 });
 
-test('writejson.sync.try: no args', t => {
+test('writejson.sync.try: no args', (t) => {
     t.throws(writejson.sync.try, /name should be string!/, 'NAME check');
     t.end();
 });
 
-test('writejson.sync.try: no json', t => {
-    let fn = () => writejson.sync.try('hello');
+test('writejson.sync.try: no json', (t) => {
+    const fn = () => writejson.sync.try('hello');
     
     t.throws(fn, /json should be object!/, 'json check');
     t.end();

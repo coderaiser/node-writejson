@@ -16,20 +16,20 @@ To handle formating optional argument `options` could be used according to [JSON
 Asynchonouse write stringified object.
 
 ```js
-var writejson = require('writejson');
+const writejson = require('writejson');
 
-writejson('data.json', {hello: 'world'}, function(error) {
+writejson('data.json', {hello: 'world'}, (error) => {
     if (error)
         console.error(error.message);
 });
 
-var options = {
+const options = {
     replacer: ['hello'],// properties to put in json
     space: 4            // default space count
     eof: true           // default new line at end of file
 };
 
-writejson('data.json', {hello: 'world'}, options, function(error) {
+writejson('data.json', {hello: 'world'}, options, (error) => {
     if (error)
         console.error(error.message);
 });

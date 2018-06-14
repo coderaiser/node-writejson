@@ -9,9 +9,9 @@
   },
   "main": "lib/writejson.js",
   "scripts": {
-    "jscs": "jscs --esnext lib test",
-    "jshint": "jshint lib test",
-    "lint": "redrun jshint jscs",
+    "lint": "redrun lint:*",
+    "lint:lib": "eslint lib",
+    "lint:test": "eslint -c .eslintrc.test --no-eslintrc test",
     "test": "tape test/*.js",
     "coverage": "nyc npm test",
     "report": "nyc report --reporter=text-lcov | coveralls"
@@ -30,10 +30,13 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
-    "jscs": "~3.0.3",
-    "jshint": "^2.8.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-node": "^6.0.1",
     "nyc": "^12.0.2",
     "redrun": "^6.0.0",
     "tape": "^4.2.2"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   }
 }
