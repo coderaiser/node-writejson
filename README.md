@@ -8,7 +8,7 @@ Write stringified object to file.
 npm i writejson --save
 ```
 ## How to use?
-To handle formating optional argument `options` could be used accroding to [JSON.stringify][StringifyURL].
+To handle formating optional argument `options` could be used according to [JSON.stringify][StringifyURL].
 
 ### API
 
