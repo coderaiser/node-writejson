@@ -116,7 +116,6 @@ test('writejson: options not object', async (t) => {
     t.end();
 });
 
-
 test('writejson.sync: should write json data to file synchonously', (t) => {
     writejson.sync(NAME, json);
     const data = fs.readFileSync(NAME, 'utf8');
