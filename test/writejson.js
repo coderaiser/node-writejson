@@ -3,91 +3,69 @@
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
-const test = require('tape');
-const {promisify} = require('es6-promisify');
+const test = require('supertape');
 const tryToCatch = require('try-to-catch');
+const tryCatch = require('try-catch');
 
 const writejson = require('..');
-const _writejson = promisify(writejson);
 
+const {readFile, unlink} = fs.promises;
 const tmp = os.tmpdir();
 const NAME = path.join(tmp, String(Math.random()));
 const json = {
     hello: 'world',
-    bye: 'sword'
+    bye: 'sword',
 };
 
-test('writejson: should write json data to file', (t) => {
-    writejson(NAME, json, error => {
-        t.notOk(error, 'no write error');
-         
-        fs.readFile(NAME, 'utf8', (error, data) => {
-            t.notOk(error, 'no read error');
-            t.deepEqual(json, JSON.parse(data), 'data should be equal');
-            
-            fs.unlink(NAME, (error) => {
-                t.notOk(error, 'no remove error');
-                t.end();
-            });
-        });
-    });
+test('writejson: should write json data to file', async (t) => {
+    await writejson(NAME, json);
+    
+    const data = await readFile(NAME, 'utf8');
+    await unlink(NAME);
+    
+    t.deepEqual(json, JSON.parse(data), 'data should be equal');
+    t.end();
 });
 
-test('writejson: should write json data to file with options', (t) => {
+test('writejson: should write json data to file with options', async (t) => {
     const result = {
-        hello: 'world'
+        hello: 'world',
     };
     
     const options = {
         replacer: ['hello'],
         space: 2,
-        eof: false
+        eof: false,
     };
     
     const resultStr = JSON.stringify(json, options.replacer, options.space);
     
-    writejson(NAME, json, options, error => {
-        t.notOk(error, 'no write error');
-         
-        fs.readFile(NAME, 'utf8', (error, data) => {
-            t.notOk(error, 'no read error');
-            
-            t.equal(resultStr, data, 'data should be equal');
-            t.deepEqual(JSON.parse(data), result, 'objects should be equal');
-            
-            fs.unlink(NAME, (error) => {
-                t.notOk(error, 'no remove error');
-                t.end();
-            });
-        });
-    });
+    await writejson(NAME, json, options);
+    const data = await readFile(NAME, 'utf8');
+    await unlink(NAME);
+    
+    t.equal(resultStr, data, 'data should be equal');
+    t.deepEqual(JSON.parse(data), result, 'objects should be equal');
+    t.end();
 });
 
-test('writejson: should write json data to file with default options', (t) => {
+test('writejson: should write json data to file with default options', async (t) => {
     const resultStr = JSON.stringify(json, null, 4) + '\n';
     
-    writejson(NAME, json, error => {
-        t.notOk(error, 'no write error');
-         
-        fs.readFile(NAME, 'utf8', (error, data) => {
-            t.notOk(error, 'no read error');
-            
-            t.equal(resultStr, data, 'data should be equal');
-            t.deepEqual(JSON.parse(data), json, 'objects should be equal');
-            
-            fs.unlink(NAME, (error) => {
-                t.notOk(error, 'no remove error');
-                t.end();
-            });
-        });
-    });
+    await writejson(NAME, json);
+    const data = await readFile(NAME, 'utf8');
+    await unlink(NAME);
+    
+    t.equal(resultStr, data, 'data should be equal');
+    t.deepEqual(JSON.parse(data), json, 'objects should be equal');
+    t.end();
 });
 
-test('writejson: write error', (t) => {
-    writejson('/hello.json', json, (error) => {
-        t.ok(error, 'should return error: ' + error.message);
-        t.end();
-    });
+test('writejson: write error', async (t) => {
+    const [error] = await tryToCatch(writejson, '/hello.json', json);
+    
+    t.ok(error, 'should return error: ' + error.message);
+    t.end();
 });
 
 test('writejson: write options', async (t) => {
@@ -96,10 +74,10 @@ test('writejson: write options', async (t) => {
     };
     
     const options = {
-        mode: 0o600
+        mode: 0o600,
     };
     
-    await tryToCatch(_writejson, NAME, json, options);
+    await tryToCatch(writejson, NAME, json, options);
     
     const {mode} = fs.statSync(NAME);
     const expected = Number(mode).toString(8).slice(3);
@@ -117,38 +95,35 @@ test('writejson.sync.try: write error', (t) => {
     t.end();
 });
 
-test('writejson: no args', (t) => {
-    t.throws(writejson, /name should be string!/, 'NAME check');
+test('writejson: no args', async (t) => {
+    const [e] = await tryToCatch(writejson);
+    
+    t.equal(e.message, 'name should be string!');
     t.end();
 });
 
-test('writejson: no json', (t) => {
-    const fn = () => writejson('hello');
+test('writejson: no json', async (t) => {
+    const [e] = await tryToCatch(writejson, 'hello');
     
-    t.throws(fn, /json should be object!/, 'json check');
+    t.equal(e.message, 'json should be object!');
     t.end();
 });
 
-test('writejson: options not object', (t) => {
-    const fn = () => writejson('hello', {}, 'options', () => {});
+test('writejson: options not object', async (t) => {
+    const [error] = await tryToCatch(writejson, 'hello', {}, 'options');
     
-    t.throws(fn, /options should be object!/, 'options check');
+    t.equal(error.message, 'options should be object!');
     t.end();
 });
 
-test('writejson: no callback', (t) => {
-    const fn = () => writejson('hello', [1,2,3]);
-    
-    t.throws(fn, /callback should be function!/, 'callback check');
-    t.end();
-});
 
 test('writejson.sync: should write json data to file synchonously', (t) => {
     writejson.sync(NAME, json);
     const data = fs.readFileSync(NAME, 'utf8');
+    fs.unlinkSync(NAME);
+    
     t.ok(data, 'data should be read');
     t.deepEqual(json, JSON.parse(data), 'data should be equal');
-    fs.unlinkSync(NAME);
     t.end();
 });
 
@@ -170,8 +145,8 @@ test('writejson.sync.try: no args', (t) => {
 });
 
 test('writejson.sync.try: no json', (t) => {
-    const fn = () => writejson.sync.try('hello');
+    const [error] = tryCatch(writejson.sync.try, 'hello');
     
-    t.throws(fn, /json should be object!/, 'json check');
+    t.ok(error, error.message);
     t.end();
 });

@@ -18,10 +18,10 @@ Asynchonouse write stringified object.
 ```js
 const writejson = require('writejson');
 
-writejson('data.json', {hello: 'world'}, (error) => {
-    if (error)
-        console.error(error.message);
-});
+const [error] = await tryToCatch(writejson, 'data.json', {hello: 'world'});
+
+if (error)
+    console.error(error.message);
 
 const options = {
     replacer: ['hello'],    // properties to put in json
@@ -32,10 +32,7 @@ const options = {
     flag: 'w',              // default
 };
 
-writejson('data.json', {hello: 'world'}, options, (error) => {
-    if (error)
-        console.error(error.message);
-});
+await writejson('data.json', {hello: 'world'}, options);
 
 ```
 #### writejson.sync(name, object[, options])
