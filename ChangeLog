@@ -1,3 +1,14 @@
+2020.02.27, v3.0.0
+
+feature:
+- (package) eslint v6.8.0
+- (package) nyc v15.0.0
+- (package) try-to-catch v3.0.0
+- (writejson) callback -> promise
+- (package) try-catch v3.0.0
+- (package) redrun v7.0.0
+
+
 2018.06.14, v2.0.1
 
 feature:
